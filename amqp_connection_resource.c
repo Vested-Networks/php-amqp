@@ -26,7 +26,7 @@
 #endif
 
 #include "php.h"
-#include "datetime.h"
+#include "ext/date/php_date.h"
 #include "zend_exceptions.h"
 
 #ifdef PHP_WIN32
@@ -581,7 +581,10 @@ amqp_connection_resource *connection_resource_constructor(amqp_connection_params
         return NULL;
     }
 
-    std_datetime = php_std_date(time(NULL));
+    const char *format_str = "D, d M Y H:i:s \\G\\M\\T";
+    size_t format_len = strlen(format_str);
+
+    std_datetime = ZSTR_VAL(php_format_date(format_str, format_len, time(NULL), 1));
 
     client_properties_entries[0].key = amqp_cstring_bytes("type");
     client_properties_entries[0].value.kind = AMQP_FIELD_KIND_UTF8;
