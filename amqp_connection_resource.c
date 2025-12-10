@@ -26,7 +26,7 @@
 #endif
 
 #include "php.h"
-#include "ext/standard/datetime.h"
+#include "datetime.h"
 #include "zend_exceptions.h"
 
 #ifdef PHP_WIN32
